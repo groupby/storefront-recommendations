@@ -10,6 +10,7 @@ class PastPurchases {
   };
 
   init() {
+    this.flux.actions.fetchPastPurchases();
     this.flux.on(Events.PAST_PURCHASES_UPDATED, this.updateProducts);
   }
 
