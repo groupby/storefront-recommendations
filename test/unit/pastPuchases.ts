@@ -15,7 +15,7 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
     getState = spy();
     PastPurchases.prototype.config = <any>{ structure: STRUCTURE };
     PastPurchases.prototype.flux = <any>{ store: { getState } };
-    pastPurchasesProducts = stub(Selectors, 'products').returns([]);
+    pastPurchasesProducts = stub(Selectors, 'orderHistory').returns([]);
     pastPurchases = new PastPurchases();
   });
 
@@ -50,12 +50,12 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
   describe('init()', () => {
     it('should listen for PAST_PURCHASES_UPDATED', () => {
       const on = spy();
-      const fetchPastPurchases = spy();
-      pastPurchases.flux = <any>{ on, actions: { fetchPastPurchases } };
+      const fetchOrderHistory = spy();
+      pastPurchases.flux = <any>{ on, actions: { fetchOrderHistory } };
 
       pastPurchases.init();
 
-      expect(on).to.be.calledWithExactly(Events.PAST_PURCHASES_UPDATED, pastPurchases.updateProducts);
+      expect(on).to.be.calledWithExactly(Events.ORDER_HISTORY_UPDATED, pastPurchases.updateProducts);
     });
   });
 
