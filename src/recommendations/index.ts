@@ -6,7 +6,7 @@ class Recommendations {
 
   structure: Structure = this.config.structure;
   state: Recommendations.State = {
-    products: this.mapProducts(Selectors.recommendationsProducts(this.flux.store.getState()))
+    products: this.mapProducts(this.select(Selectors.recommendationsProducts))
   };
 
   init() {

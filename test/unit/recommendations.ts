@@ -4,18 +4,15 @@ import Recommendations from '../../src/recommendations';
 import suite from './_suite';
 
 const STRUCTURE = { w: 'x' };
-const STATE = { y: 'z' };
 
 suite('Recommendations', ({ expect, spy, stub }) => {
-  let getState: sinon.SinonSpy;
-  let recommendationsProducts: sinon.SinonStub;
+  let select: sinon.SinonStub;
   let recommendations: Recommendations;
 
   beforeEach(() => {
-    getState = spy();
     Recommendations.prototype.config = <any>{ structure: STRUCTURE };
-    Recommendations.prototype.flux = <any>{ store: { getState } };
-    recommendationsProducts = stub(Selectors, 'recommendationsProducts').returns([]);
+    Recommendations.prototype.flux = <any>{};
+    select = Recommendations.prototype.select = stub().returns([]);
     recommendations = new Recommendations();
   });
   afterEach(() => {
@@ -35,7 +32,7 @@ suite('Recommendations', ({ expect, spy, stub }) => {
         const products = ['a', 'b', 'c'];
         const remapped = ['d', 'e', 'f'];
         const mapProducts = stub(Recommendations.prototype, 'mapProducts').returns(remapped);
-        recommendationsProducts.returns(products);
+        select.returns(products);
 
         const tag = new Recommendations();
 
