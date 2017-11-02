@@ -3,17 +3,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@storefront/recommendations</title>
+	<title>State | @storefront/recommendations</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <header>
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@storefront/recommendations</a>
+					<a href="../index.html" class="title">@storefront/recommendations</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -53,110 +53,92 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="globals.html">Globals</a>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../classes/pastpurchases.html">PastPurchases</a>
+				</li>
+				<li>
+					<a href="pastpurchases.state.html">State</a>
 				</li>
 			</ul>
-			<h1> @storefront/recommendations</h1>
+			<h1>Interface State</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">State</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Classes</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-class"><a href="classes/pastpurchases.html" class="tsd-kind-icon">Past<wbr>Purchases</a></li>
-								<li class="tsd-kind-class"><a href="classes/recommendations.html" class="tsd-kind-icon">Recommendations</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-is-not-exported"><a href="globals.html#state" class="tsd-kind-icon">STATE</a></li>
-								<li class="tsd-kind-object-literal tsd-is-not-exported"><a href="globals.html#structure" class="tsd-kind-icon">STRUCTURE</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="pastpurchases.state.html#products" class="tsd-kind-icon">products</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-is-not-exported">
-					<a name="state" class="tsd-anchor"></a>
-					<h3>STATE</h3>
-					<div class="tsd-signature tsd-kind-icon">STATE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="products" class="tsd-anchor"></a>
+					<h3>products</h3>
+					<div class="tsd-signature tsd-kind-icon">products<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/pastPuchases.ts#L7">test/unit/pastPuchases.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/src/past-purchases/index.ts#L28">src/past-purchases/index.ts:28</a></li>
 						</ul>
 					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="state.y" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;z&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/pastPuchases.ts#L7">test/unit/pastPuchases.ts:7</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-is-not-exported">
-					<a name="structure" class="tsd-anchor"></a>
-					<h3>STRUCTURE</h3>
-					<div class="tsd-signature tsd-kind-icon">STRUCTURE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/pastPuchases.ts#L6">test/unit/pastPuchases.ts:6</a></li>
-							<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/recommendations.ts#L6">test/unit/recommendations.ts:6</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
-						<a name="structure.w" class="tsd-anchor"></a>
-						<h3>w</h3>
-						<div class="tsd-signature tsd-kind-icon">w<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;x&quot;</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/pastPuchases.ts#L6">test/unit/pastPuchases.ts:6</a></li>
-								<li>Defined in <a href="https://github.com/groupby/storefront-recommendations/blob/9388c03/test/unit/recommendations.ts#L6">test/unit/recommendations.ts:6</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals current ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module tsd-parent-kind-class">
-						<a href="modules/pastpurchases.tag.html">Past<wbr>Purchases.<wbr>Tag</a>
-					</li>
-					<li class=" tsd-kind-module tsd-parent-kind-class">
-						<a href="modules/recommendations.tag.html">Recommendations.<wbr>Tag</a>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="classes/pastpurchases.html" class="tsd-kind-icon">Past<wbr>Purchases</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="../classes/pastpurchases.html" class="tsd-kind-icon">Past<wbr>Purchases</a>
+						<ul>
+							<li class="current tsd-kind-interface tsd-parent-kind-class">
+								<a href="pastpurchases.state.html" class="tsd-kind-icon">State</a>
+								<ul>
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="pastpurchases.state.html#products" class="tsd-kind-icon">products</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-class">
-						<a href="classes/recommendations.html" class="tsd-kind-icon">Recommendations</a>
+						<a href="../classes/recommendations.html" class="tsd-kind-icon">Recommendations</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="globals.html#state" class="tsd-kind-icon">STATE</a>
+						<a href="../globals.html#state" class="tsd-kind-icon">STATE</a>
 					</li>
 					<li class=" tsd-kind-object-literal tsd-is-not-exported">
-						<a href="globals.html#structure" class="tsd-kind-icon">STRUCTURE</a>
+						<a href="../globals.html#structure" class="tsd-kind-icon">STRUCTURE</a>
 					</li>
 				</ul>
 			</nav>
@@ -226,7 +208,7 @@
 	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
