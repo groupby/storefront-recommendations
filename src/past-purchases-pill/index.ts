@@ -10,12 +10,17 @@ class PastPurchasesPill {
 
   state: PastPurchasesPill.State = {
     link: () => 'TODO',
-    onClick: () => { },
-    onSelect: (index: number, persist?: boolean) => { },
+    // some flux action
+    onClick: () => {
+      console.log(this.state.navigation);
+    },
+
+    // TODO
+    selected: true
   };
 
   init() {
-    this.state = {...this.state, navigation: this.props.navigation };
+    this.state = { ...this.state, navigation: this.props.navigation };
   }
   onUpdate() {
     this.state = { ...this.state, navigation: this.props.navigation };
@@ -26,18 +31,14 @@ class PastPurchasesPill {
 interface PastPurchasesPill extends Tag<PastPurchasesPill.Props, PastPurchasesPill.State> { }
 namespace PastPurchasesPill {
   export interface Props extends Tag.Props {
-    navigation: {
-      field: string,
-      count: number,
-    };
+    navigation: Store.Recommendations.OrderHistoryNavigation;
   }
 
   export interface State {
-    navigation?: any;
+    navigation?: Store.Recommendations.OrderHistoryNavigation;
     selected?: any;
     link(): string;
     onClick(): void;
-    onSelect(index: number, persist?: boolean): void;
   }
 }
 

@@ -12,14 +12,14 @@ class PastPurchasesPills {
     this.flux.on(Events.ORDER_HISTORY_NAVIGATIONS_UPDATED, this.updateNavigations);
   }
 
-  updateNavigations = (navigations: Store.Recommendations.Navigation[]) =>
+  updateNavigations = (navigations: Store.Recommendations.OrderHistoryNavigation[]) =>
     this.set({ navigations })
 }
 
 interface PastPurchasesPills extends Tag<any, PastPurchasesPills.State> { }
 namespace PastPurchasesPills {
   export interface State {
-    navigations: Store.Recommendations.Navigation[];
+    navigations: Store.Recommendations.OrderHistoryNavigation[];
   }
 }
 
