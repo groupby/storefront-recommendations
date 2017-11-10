@@ -31,11 +31,11 @@ class PastPurchasesPill {
 interface PastPurchasesPill extends Tag<PastPurchasesPill.Props, PastPurchasesPill.State> { }
 namespace PastPurchasesPill {
   export interface Props extends Tag.Props {
-    navigation: Store.Recommendations.OrderHistoryNavigation;
+    navigation: Store.Recommendations.PastPurchaseRefinement;
   }
 
   export interface State {
-    navigation?: Store.Recommendations.OrderHistoryNavigation;
+    navigation?: Store.Recommendations.PastPurchaseRefinement;
     selected?: any;
     link(): string;
     onClick(): void;

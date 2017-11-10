@@ -26,7 +26,7 @@ class PastPurchases {
     ({ ...ProductTransformer.transformer(this.structure)(data), meta })
 
   init() {
-    this.flux.on(Events.ORDER_HISTORY_UPDATED, this.updateProducts);
+    this.flux.on(Events.PAST_PURCHASE_PRODUCTS_UPDATED, this.updateProducts);
   }
 
   updateProducts = (products: Store.ProductWithMetadata[]) =>
