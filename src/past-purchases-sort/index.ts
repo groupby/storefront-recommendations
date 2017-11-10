@@ -6,22 +6,23 @@ import { alias, configurable, tag, Events, Selectors, Store, Tag } from '@storef
 class Sort {
   state: Sort.State = {
     //todo move to selector in flux
-    labels: ['Most Recent', 'Most Purchased'],
+    // labels: ['Most Recent', 'Most Purchased'],
+    labels: [],
     sorts: [],
     // onSelect: (index) => this.actions.selectSort(index)
-    onSelect: (index) => { }
+    onSelect: (index) => { this.actions.selectPastPurchasesSort(index); }
   };
 
   init() {
     this.updateSorts();
-    this.flux.on(Events.SORTS_UPDATED, this.updateSorts);
+    this.flux.on(Events.PAST_PURCHASE_SORT_UPDATED, this.updateSorts);
   }
 
   updateSorts = () =>
     this.set({ sorts: this.extractSorts() })
 
   extractSorts() {
-    const sorts = this.select(Selectors.sorts);
+    const sorts = this.select(Selectors.pastPurchaseSort);
     return sorts.items.map((sort, index) => ({
       label: this.getLabel(sort, index),
       selected: sorts.selected === index
@@ -29,8 +30,8 @@ class Sort {
   }
 
   getLabel(sort: Store.Sort, index: number) {
-    if (index < this.props.labels.length) {
-      return this.props.labels[index];
+    if (index < this.state.labels.length) {
+      return this.state.labels[index];
     } else {
       return `${sort.field} ${sort.descending ? 'Descending' : 'Ascending'}`;
     }
