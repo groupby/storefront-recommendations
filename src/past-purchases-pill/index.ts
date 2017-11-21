@@ -2,7 +2,7 @@
 import { alias, tag, Events, ProductTransformer, Selectors, Store, Structure, Tag } from '@storefront/core';
 
 @alias('pastPurchasesPill')
-@tag('gb-past-purchases-pill', require('./index.html'), require('./index.css'))
+@tag('gb-past-purchases-pill', require('./index.html'))
 class PastPurchasesPill {
   props: PastPurchasesPill.Props = {
     navigation: undefined
