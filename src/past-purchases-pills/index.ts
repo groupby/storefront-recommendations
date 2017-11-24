@@ -12,14 +12,18 @@ class PastPurchasesPills {
     this.flux.on(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.updateNavigations);
   }
 
-  updateNavigations = (navigations: Store.PastPurchases.PastPurchaseRefinement[]) =>
-    this.set({ navigations })
+  updateNavigations = (navigations: Store.Indexed<Store.Navigation>) => {
+    const navigationsArray = navigations.allIds.map((key) => {
+      return navigations.byId[key];
+    });
+    this.set({ navigations: navigationsArray });
+  }
 }
 
 interface PastPurchasesPills extends Tag<any, PastPurchasesPills.State> { }
 namespace PastPurchasesPills {
   export interface State {
-    navigations: Store.PastPurchases.PastPurchaseRefinement[];
+    navigations: Store.Navigation[];
   }
 }
 

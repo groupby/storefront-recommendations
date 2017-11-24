@@ -1,3 +1,5 @@
 <yield>
-  <gb-pill onclick="{ $pastPurchasesPill.onClick }" selected="{ true }">{ $pastPurchasesPill.navigation.displayName } 99</gb-pill>
+  <gb-pill onclick="{ $pastPurchasesPill.onClick }" selected="{ $pastPurchasesPill.selected }">
+    { $pastPurchasesPill.refinement.value } { $pastPurchasesPill.refinement.total }
+  </gb-pill>
 </yield>

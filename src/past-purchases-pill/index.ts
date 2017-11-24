@@ -1,45 +1,55 @@
-
 import { alias, tag, Events, ProductTransformer, Selectors, Store, Structure, Tag } from '@storefront/core';
 
 @alias('pastPurchasesPill')
 @tag('gb-past-purchases-pill', require('./index.html'))
 class PastPurchasesPill {
   props: PastPurchasesPill.Props = {
-    navigation: undefined
+    refinement: undefined,
   };
 
   state: PastPurchasesPill.State = {
-    link: () => 'TODO',
-    // some flux action
-    onClick: () => {
-      console.log(this.state.navigation);
-    },
-
-    // TODO
-    selected: true
+    refinement: undefined,
+    onClick: undefined,
+    selected: false
   };
 
   init() {
-    this.state = { ...this.state, navigation: this.props.navigation };
+    this.updateState();
   }
   onUpdate() {
-    this.state = { ...this.state, navigation: this.props.navigation };
+    this.updateState();
     this.updateAlias('pastPurchasesPill', this.state);
+  }
+
+  updateState() {
+    const refinement = this.props.refinement;
+    this.state = {
+      ...this.state,
+      refinement,
+      onClick: refinement.onClick,
+      // explicitly false if falsy
+      selected: refinement.selected || false };
   }
 }
 
 interface PastPurchasesPill extends Tag<PastPurchasesPill.Props, PastPurchasesPill.State> { }
 namespace PastPurchasesPill {
   export interface Props extends Tag.Props {
-    navigation: Store.PastPurchases.PastPurchaseRefinement;
+    refinement: PillsRefinement;
   }
 
   export interface State {
-    navigation?: Store.PastPurchases.PastPurchaseRefinement;
+    refinement: PillsRefinement;
     selected?: any;
-    link(): string;
-    onClick(): void;
+    onClick: Function;
   }
+
+  // TODO reuse interface from category
+  export type PillsRefinement = Store.Refinement & {
+    onClick: Function,
+    selected: boolean,
+    display?: string,
+  };
 }
 
 export default PastPurchasesPill;

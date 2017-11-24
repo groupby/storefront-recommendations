@@ -1,0 +1,6 @@
+<yield>
+  <div>{ $pastPurchasesPillsCategory.navigation.label || $pastPurchasesPillsCategory.navigation.field }</div>
+  <gb-list items="{ $pastPurchasesPillsCategory.refinements }" layout="grid">
+    <gb-past-purchases-pill refinement="{ $item }"></gb-past-purchases-pill>
+  </gb-list>
+</yield>
