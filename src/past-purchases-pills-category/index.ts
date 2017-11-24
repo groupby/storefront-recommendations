@@ -25,14 +25,11 @@ class PastPurchasesPillCategory {
     navigation.selected.forEach((index) => {
       navigation.refinements[index]['selected'] = true;
     });
-
-    const refinements = navigation && navigation.refinements ? navigation.refinements.map((refinement) => {
+    const refinements = navigation && navigation.refinements ? navigation.refinements.map((refinement, index) => {
       const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'selectPastPurchaseRefinement';
-      console.log('wwhhyhyhyh', action, navigation.field, refinement['index']);
-
       return {
         ...refinement,
-        onClick: () => this.actions[action](navigation.field, refinement['index'])
+        onClick: () => this.actions[action](navigation.field, index)
       };
     }) : [];
 
