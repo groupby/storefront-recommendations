@@ -8,14 +8,12 @@ const STATE = { y: 'z' };
 
 suite('PastPurchases', ({ expect, spy, stub }) => {
   let getState: sinon.SinonSpy;
-  let pastPurchasesProducts: sinon.SinonStub;
   let pastPurchases: PastPurchases;
 
   beforeEach(() => {
     getState = spy();
     PastPurchases.prototype.config = <any>{ structure: STRUCTURE };
     PastPurchases.prototype.flux = <any>{ store: { getState } };
-    pastPurchasesProducts = stub(Selectors, 'orderHistory').returns([]);
     pastPurchases = new PastPurchases();
   });
 
@@ -33,16 +31,9 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
 
     describe('state', () => {
       it('should set initial value', () => {
-        const products = ['a', 'b', 'c'];
-        const remapped = ['d', 'e', 'f'];
-        const mapProducts = stub(PastPurchases.prototype, 'mapProducts').returns(remapped);
-        stub(Selectors, 'pastPurchases').returns(products);
-        pastPurchasesProducts.returns(products);
-
         const tag = new PastPurchases();
 
-        expect(tag.state).to.eql({ products: remapped });
-        expect(mapProducts).to.be.calledWith(products);
+        expect(tag.state).to.eql({ products: [] });
       });
     });
   });
@@ -50,12 +41,11 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
   describe('init()', () => {
     it('should listen for PAST_PURCHASES_UPDATED', () => {
       const on = spy();
-      const fetchOrderHistory = spy();
-      pastPurchases.flux = <any>{ on, actions: { fetchOrderHistory } };
+      pastPurchases.flux = <any>{ on };
 
       pastPurchases.init();
 
-      expect(on).to.be.calledWithExactly(Events.ORDER_HISTORY_UPDATED, pastPurchases.updateProducts);
+      expect(on).to.be.calledWithExactly(Events.PAST_PURCHASE_PRODUCTS_UPDATED, pastPurchases.updateProducts);
     });
   });
 
@@ -65,7 +55,6 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
       const remapped = ['d', 'e', 'f'];
       const set = pastPurchases.set = spy();
       const mapProducts = pastPurchases.mapProducts = spy(() => remapped);
-      stub(Selectors, 'pastPurchases').returns(products);
 
       pastPurchases.updateProducts(products);
 
@@ -76,10 +65,20 @@ suite('PastPurchases', ({ expect, spy, stub }) => {
 
   describe('mapProducts()', () => {
     it('should transform and remap products', () => {
-      const transform = spy(() => 'x');
+      const transform = spy(() => ({ data: 'x' }));
       const transformer = stub(ProductTransformer, 'transformer').returns(transform);
+      const products = [
+        { data: 'a', meta: '1', },
+        { data: 'b', meta: '2', },
+        { data: 'c', meta: '3', },
+      ];
+      const transformedProducts = [
+        { data: 'x', meta: '1', },
+        { data: 'x', meta: '2', },
+        { data: 'x', meta: '3', },
+      ];
 
-      expect(pastPurchases.mapProducts(<any[]>['a', 'b', 'c'])).to.eql(['x', 'x', 'x']);
+      expect(pastPurchases.mapProducts(<any[]>products)).to.eql(transformedProducts);
       expect(transformer).to.be.calledWithExactly(STRUCTURE);
       expect(transform).to.be.calledThrice
         .and.calledWith('a')

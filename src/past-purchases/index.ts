@@ -4,7 +4,6 @@ import {
   tag,
   Events,
   ProductTransformer,
-  Selectors,
   Store,
   Structure,
   Tag

@@ -1,0 +1,1 @@
+import PastPurchasesPillsCategory from '../../src/past-purchases-pills-category';

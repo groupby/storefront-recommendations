@@ -1,0 +1,1 @@
+import PastPurchasesPills from '../../src/past-purchases-pills';
