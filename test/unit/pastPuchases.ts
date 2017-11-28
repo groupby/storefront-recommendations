@@ -4,16 +4,12 @@ import PastPurchases from '../../src/past-purchases';
 import suite from './_suite';
 
 const STRUCTURE = { w: 'x' };
-const STATE = { y: 'z' };
 
 suite('PastPurchases', ({ expect, spy, stub }) => {
-  let getState: sinon.SinonSpy;
   let pastPurchases: PastPurchases;
 
   beforeEach(() => {
-    getState = spy();
     PastPurchases.prototype.config = <any>{ structure: STRUCTURE };
-    PastPurchases.prototype.flux = <any>{ store: { getState } };
     pastPurchases = new PastPurchases();
   });
 

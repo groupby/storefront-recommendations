@@ -13,10 +13,11 @@ class PastPurchasesPills {
   }
 
   updateNavigations = (navigations: Store.Indexed<Store.Navigation>) => {
-    const navigationsArray = navigations.allIds.map((key) => {
-      return navigations.byId[key];
+    this.set({
+      navigations: navigations.allIds.map((key) => {
+        return navigations.byId[key];
+      })
     });
-    this.set({ navigations: navigationsArray });
   }
 }
 

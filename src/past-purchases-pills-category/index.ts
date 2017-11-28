@@ -22,9 +22,12 @@ class PastPurchasesPillCategory {
 
   updateState() {
     const navigation = this.props.navigation;
-    navigation.selected.forEach((index) => {
-      navigation.refinements[index]['selected'] = true;
-    });
+    // messy check TODO review
+    if (navigation && navigation.selected && navigation.refinements) {
+      navigation.selected.forEach((index) => {
+        navigation.refinements[index]['selected'] = true;
+      });
+    }
     const refinements = navigation && navigation.refinements ? navigation.refinements.map((refinement, index) => {
       const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'selectPastPurchaseRefinement';
       return {
@@ -33,7 +36,7 @@ class PastPurchasesPillCategory {
       };
     }) : [];
 
-    this.state = { ...this.state, refinements, navigation };
+    this.set({ refinements, navigation });
   }
 }
 

@@ -23,12 +23,12 @@ class PastPurchasesPill {
 
   updateState() {
     const refinement = this.props.refinement;
-    this.state = {
-      ...this.state,
+
+    this.set({
       refinement,
       onClick: refinement.onClick,
-      // explicitly false if falsy
-      selected: refinement.selected || false };
+      selected: !!refinement.selected,
+    });
   }
 }
 
