@@ -22,6 +22,7 @@ class PastPurchasesPillCategory {
 
   updateState() {
     const navigation = this.props.navigation;
+
     // messy check TODO review
     if (navigation && navigation.selected && navigation.refinements) {
       navigation.selected.forEach((index) => {
@@ -32,16 +33,17 @@ class PastPurchasesPillCategory {
       const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'selectPastPurchaseRefinement';
       return {
         ...refinement,
-        onClick: () => this.actions[action](navigation.field, index)
+        onClick: (() => refinement['onClick'] ?
+          refinement['onClick']() : this.actions[action](navigation.field, index))
       };
     }) : [];
 
-    this.set({ refinements, navigation });
+    this.state = { refinements, navigation };
   }
 }
 
 interface PastPurchasesPillCategory extends Tag<PastPurchasesPillCategory.Props, PastPurchasesPillCategory.State> { }
-namespace PastPurchasesPillCategory {
+export namespace PastPurchasesPillCategory {
   export interface Props extends Tag.Props {
     navigation: Store.Navigation;
   }
@@ -50,12 +52,6 @@ namespace PastPurchasesPillCategory {
     navigation: Store.Navigation;
     refinements: Store.Refinement[];
   }
-
-  export type PillsRefinement = Store.Refinement & {
-    onClick: Function,
-    selected: boolean,
-    display?: string,
-  };
 }
 
 export default PastPurchasesPillCategory;

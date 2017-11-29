@@ -24,11 +24,11 @@ class PastPurchasesPill {
   updateState() {
     const refinement = this.props.refinement;
 
-    this.set({
+    this.state = {
       refinement,
       onClick: refinement.onClick,
       selected: !!refinement.selected,
-    });
+    };
   }
 }
 
@@ -44,7 +44,6 @@ namespace PastPurchasesPill {
     onClick: Function;
   }
 
-  // TODO reuse interface from category
   export type PillsRefinement = Store.Refinement & {
     onClick: Function,
     selected: boolean,
