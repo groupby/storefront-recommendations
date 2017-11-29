@@ -31,7 +31,11 @@ class PastPurchasesPills {
       field: 'query',
       label: 'Query',
       selected: [0],
-      refinements: [{ value: query, onClick: () => this.actions.updatePastPurchaseQuery('') }]
+      refinements: [{
+        value: query,
+        total: this.select(Selectors.pastPurchaseRecordCount),
+        onClick: () => this.actions.updatePastPurchaseQuery(''),
+      }]
     });
   }
 }
