@@ -15,6 +15,7 @@ class PastPurchasesPillCategory {
   init() {
     this.updateState();
   }
+
   onUpdate() {
     this.updateState();
     this.updateAlias('pastPurchasesPillsCategory', this.state);
@@ -25,18 +26,19 @@ class PastPurchasesPillCategory {
 
     // messy check TODO review
     if (navigation && navigation.selected && navigation.refinements) {
-      navigation.selected.forEach((index) => {
-        navigation.refinements[index]['selected'] = true;
+      navigation.refinements.forEach((value, index) => {
+        value['selected'] = navigation.selected.some((i) => i === index);
       });
     }
     const refinements = navigation && navigation.refinements ? navigation.refinements.map((refinement, index) => {
-      const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'selectPastPurchaseRefinement';
+      const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'resetAndSelectPastPurchaseRefinement';
       return {
         ...refinement,
         onClick: (() => refinement['onClick'] ?
           refinement['onClick']() :
-          // [this.actions[action](navigation.field, index)])
-          this.actions.resetAndSelectPastPurchaseRefinement(navigation.field, index))
+          [this.actions.updatePastPurchaseQuery(''), this.actions.resetAndSelectPastPurchaseRefinement(navigation.field, index)])
+          // this.actions.resetPastPurchaseQueryThenResetAndSelectRefinement(navigation.field, index)),
+          // this.actions.resetAndSelectPastPurchaseRefinement(navigation.field, index)),
       };
     }) : [];
 
