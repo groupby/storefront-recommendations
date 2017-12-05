@@ -7,61 +7,77 @@ class PastPurchasesPills {
   state: PastPurchasesPills.State = {
     navigations: {},
     navigationsArray: [],
-    queryNavigation: undefined
+    queryNavigation: {},
+    displayQuery: '',
   };
 
   init() {
-    console.log('init called');
     this.flux.on(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.updateNavigations);
-    this.flux.on(Events.PAST_PURCHASE_QUERY_UPDATED, this.updateQueryNavigation);
+    this.flux.on(Events.PAST_PURCHASE_QUERY_UPDATED, this.updateDisplayQuery);
   }
 
   updateNavigations = (navigations: Store.Indexed<Store.Navigation>) => {
-    console.log('update navigations called');
+    if (!navigations.allIds) {
+      return;
+    }
+
     const navigationsArray = navigations.allIds.map((key) => {
-        return navigations.byId[key];
-      });
+      return navigations.byId[key];
+    });
 
     this.buildQueryNavigation();
+
     navigationsArray.unshift(this.state.queryNavigation);
 
     this.set({ navigations, navigationsArray });
   }
 
+  updateDisplayQuery = (newQuery: string) => {
+    if (newQuery) {
+      this.state.displayQuery = newQuery;
+    }
+    if (this.state.navigations) {
+      this.updateNavigations(this.state.navigations);
+    }
+  }
+
   buildQueryNavigation = () => {
-    const query = this.select(Selectors.pastPurchaseQuery) || '';
-    const displayQuery = this.select(Selectors.pastPurchaseDisplayQuery) || '';
+    const currentQuery = this.select(Selectors.pastPurchaseQuery) || '';
+    const displayQuery = this.state.displayQuery;
+    const queriesAreEqual = displayQuery === currentQuery;
     const hasRefinementSelected = this.select(Selectors.pastPurchaseSelectedRefinements).length !== 0;
-    const displayQueryNotEmpty = displayQuery !== '';
-    console.log('whyyyyyyyyyyyyyyyy', query, 'display', displayQuery);
+
+    const resetQuery = () => this.actions.updatePastPurchaseQuery('');
 
     const refinements = [{
       value: 'All your purchases',
       total: this.select(Selectors.pastPurchaseAllRecordCount),
-      onClick: () => this.actions.updatePastPurchaseQuery(''),
+      onClick: resetQuery,
+      onClose: undefined,
     }];
 
-    if (displayQueryNotEmpty) {
-      console.log('slajkdhaslkhdaskjdaskldaksdhalskhdaklshda');
+    if (displayQuery) {
       refinements.unshift({
         value: displayQuery,
         total: this.select(Selectors.pastPurchaseCurrentRecordCount),
         onClick: () => this.actions.updatePastPurchaseQuery(displayQuery),
+        onClose: () => {
+          this.state.displayQuery = '';
+          if (queriesAreEqual) {
+            resetQuery();
+          } else if (this.state.navigations) {
+            this.updateNavigations(this.state.navigations);
+          }
+        },
       });
     }
 
-    const navigation = {
+    this.state.queryNavigation = {
       field: 'query',
       label: 'Query',
-      selected: hasRefinementSelected ? [] : [query === displayQuery ? 0 : displayQueryNotEmpty ? 1 : 0],
+      selected: hasRefinementSelected ? [] : [(displayQuery && !queriesAreEqual) ? 1 : 0],
       refinements
     };
-
-    this.state.queryNavigation = navigation;
-  }
-
-  updateQueryNavigation = () => {
-    this.updateNavigations(this.state.navigations);
   }
 }
 
@@ -71,6 +87,7 @@ namespace PastPurchasesPills {
     navigations: any;
     navigationsArray: Store.Navigation[];
     queryNavigation: any;
+    displayQuery: string;
   }
 }
 

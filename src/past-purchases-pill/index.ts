@@ -10,6 +10,7 @@ class PastPurchasesPill {
   state: PastPurchasesPill.State = {
     refinement: undefined,
     onClick: undefined,
+    onClose: undefined,
     selected: false
   };
 
@@ -27,6 +28,7 @@ class PastPurchasesPill {
     this.state = {
       refinement,
       onClick: refinement.onClick,
+      onClose: refinement.onClose,
       selected: !!refinement.selected,
     };
   }
@@ -42,10 +44,12 @@ namespace PastPurchasesPill {
     refinement: PillsRefinement;
     selected?: any;
     onClick: Function;
+    onClose: Function;
   }
 
   export type PillsRefinement = Store.Refinement & {
     onClick: Function,
+    onClose?: Function,
     selected: boolean,
     display?: string,
   };

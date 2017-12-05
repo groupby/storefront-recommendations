@@ -31,14 +31,10 @@ class PastPurchasesPillCategory {
       });
     }
     const refinements = navigation && navigation.refinements ? navigation.refinements.map((refinement, index) => {
-      const action = refinement['selected'] ? 'deselectPastPurchaseRefinement' : 'resetAndSelectPastPurchaseRefinement';
       return {
         ...refinement,
         onClick: (() => refinement['onClick'] ?
-          refinement['onClick']() :
-          [this.actions.updatePastPurchaseQuery(''), this.actions.resetAndSelectPastPurchaseRefinement(navigation.field, index)])
-          // this.actions.resetPastPurchaseQueryThenResetAndSelectRefinement(navigation.field, index)),
-          // this.actions.resetAndSelectPastPurchaseRefinement(navigation.field, index)),
+          refinement['onClick']() : this.actions.pastPurchaseResetQueryAndSelectReifnement(navigation.field, index)),
       };
     }) : [];
 
