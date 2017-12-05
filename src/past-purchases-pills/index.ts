@@ -5,39 +5,40 @@ import { alias, tag, Events, ProductTransformer, Selectors, Store, Structure, Ta
 class PastPurchasesPills {
 
   state: PastPurchasesPills.State = {
-    navigations: {},
     navigationsArray: [],
     queryNavigation: {},
     displayQuery: '',
+    displayCount: 0,
   };
 
   init() {
-    this.flux.on(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.updateNavigations);
-    this.flux.on(Events.PAST_PURCHASE_QUERY_UPDATED, this.updateDisplayQuery);
+    this.updateDisplayQuery(this.select(Selectors.pastPurchaseQuery));
+    this.flux.on(Events.PAST_PURCHASE_PRODUCTS_UPDATED, this.doTheThing);
+    this.flux.once(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.doTheThing);
   }
 
-  updateNavigations = (navigations: Store.Indexed<Store.Navigation>) => {
-    if (!navigations.allIds) {
-      return;
-    }
+  doTheThing = () => {
+    this.updateDisplayQuery(this.select(Selectors.pastPurchaseQuery));
+    this.updateNavigations(this.select(Selectors.pastPurchaseNavigations));
+  }
 
-    const navigationsArray = navigations.allIds.map((key) => {
-      return navigations.byId[key];
-    });
+  updateNavigations = (navigations: Store.Navigation[]) => {
+    const navigationsArray = navigations;
+
+    console.log('asdadasdadsadasdadsada', navigationsArray);
+    console.log('cccc', this.select(Selectors.pastPurchaseNavigations));
 
     this.buildQueryNavigation();
 
     navigationsArray.unshift(this.state.queryNavigation);
 
-    this.set({ navigations, navigationsArray });
+    this.set({ navigationsArray });
   }
 
   updateDisplayQuery = (newQuery: string) => {
     if (newQuery) {
       this.state.displayQuery = newQuery;
-    }
-    if (this.state.navigations) {
-      this.updateNavigations(this.state.navigations);
+      this.state.displayCount = this.select(Selectors.pastPurchaseCurrentRecordCount);
     }
   }
 
@@ -59,14 +60,14 @@ class PastPurchasesPills {
     if (displayQuery) {
       refinements.unshift({
         value: displayQuery,
-        total: this.select(Selectors.pastPurchaseCurrentRecordCount),
+        total: this.state.displayCount,
         onClick: () => this.actions.updatePastPurchaseQuery(displayQuery),
         onClose: () => {
           this.state.displayQuery = '';
           if (queriesAreEqual) {
             resetQuery();
-          } else if (this.state.navigations) {
-            this.updateNavigations(this.state.navigations);
+          } else {
+            this.doTheThing();
           }
         },
       });
@@ -84,10 +85,11 @@ class PastPurchasesPills {
 interface PastPurchasesPills extends Tag<any, PastPurchasesPills.State> { }
 namespace PastPurchasesPills {
   export interface State {
-    navigations: any;
+    // navigations: any;
     navigationsArray: Store.Navigation[];
     queryNavigation: any;
     displayQuery: string;
+    displayCount: number;
   }
 }
 
