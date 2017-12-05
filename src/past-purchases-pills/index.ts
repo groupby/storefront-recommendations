@@ -5,37 +5,35 @@ import { alias, tag, Events, ProductTransformer, Selectors, Store, Structure, Ta
 class PastPurchasesPills {
 
   state: PastPurchasesPills.State = {
-    navigationsArray: [],
+    navigations: [],
     queryNavigation: {},
     displayQuery: '',
     displayCount: 0,
   };
 
   init() {
-    this.updateDisplayQuery(this.select(Selectors.pastPurchaseQuery));
-    this.flux.on(Events.PAST_PURCHASE_PRODUCTS_UPDATED, this.doTheThing);
-    this.flux.once(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.doTheThing);
+    this.updateDisplayQuery();
+    this.flux.on(Events.PAST_PURCHASE_PRODUCTS_UPDATED, this.updateState);
+    this.flux.once(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.updateState);
   }
 
-  doTheThing = () => {
-    this.updateDisplayQuery(this.select(Selectors.pastPurchaseQuery));
-    this.updateNavigations(this.select(Selectors.pastPurchaseNavigations));
+  updateState = () => {
+    this.updateDisplayQuery();
+    this.updateNavigations();
   }
 
-  updateNavigations = (navigations: Store.Navigation[]) => {
-    const navigationsArray = navigations;
-
-    console.log('asdadasdadsadasdadsada', navigationsArray);
-    console.log('cccc', this.select(Selectors.pastPurchaseNavigations));
+  updateNavigations = () => {
+    const navigations = this.select(Selectors.pastPurchaseNavigations);
 
     this.buildQueryNavigation();
 
-    navigationsArray.unshift(this.state.queryNavigation);
+    navigations.unshift(this.state.queryNavigation);
 
-    this.set({ navigationsArray });
+    this.set({ navigations });
   }
 
-  updateDisplayQuery = (newQuery: string) => {
+  updateDisplayQuery = () => {
+    const newQuery = this.select(Selectors.pastPurchaseQuery);
     if (newQuery) {
       this.state.displayQuery = newQuery;
       this.state.displayCount = this.select(Selectors.pastPurchaseCurrentRecordCount);
@@ -67,7 +65,7 @@ class PastPurchasesPills {
           if (queriesAreEqual) {
             resetQuery();
           } else {
-            this.doTheThing();
+            this.updateState();
           }
         },
       });
@@ -86,7 +84,7 @@ interface PastPurchasesPills extends Tag<any, PastPurchasesPills.State> { }
 namespace PastPurchasesPills {
   export interface State {
     // navigations: any;
-    navigationsArray: Store.Navigation[];
+    navigations: Store.Navigation[];
     queryNavigation: any;
     displayQuery: string;
     displayCount: number;
