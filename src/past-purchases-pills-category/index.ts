@@ -34,7 +34,7 @@ class PastPurchasesPillCategory {
       return {
         ...refinement,
         onClick: (() => refinement['onClick'] ?
-          refinement['onClick']() : this.actions.pastPurchaseResetQueryAndSelectReifnement(navigation.field, index)),
+          refinement['onClick']() : this.actions.resetPastPurchaseQueryAndSelectRefinement(navigation.field, index)),
       };
     }) : [];
 
