@@ -58,20 +58,22 @@ suite('PastPurchasesPillsCategory', ({ expect, spy, stub }) => {
   describe('updateState()', () => {
     it('should set state', () => {
       const field = 'colors';
+      const onClick = spy();
       const navigation: any = {
         field,
         selected: [1],
-        refinements: [{ a: 1, }, { b: 2, }, { c: 3, }]
+        refinements: [{ a: 1, onClick }, { b: 2, }, { c: 3, }]
       };
       const newNavigation: any = {
         field,
         selected: [1],
-        refinements: [{ a: 1, }, { b: 2, selected: true }, { c: 3, }]
+        refinements: [{ a: 1, selected: false, onClick }, { b: 2, selected: true }, { c: 3, selected: false }]
       };
       const newRefinements: any = [
         {
           a: 1,
-          onClick: () => this.actions['selectPastPurchaseRefinement'](field, 0),
+          selected: false,
+          onClick,
         },
         {
           b: 2,
@@ -80,14 +82,13 @@ suite('PastPurchasesPillsCategory', ({ expect, spy, stub }) => {
         },
         {
           c: 3,
+          selected: false,
           onClick: () => this.actions['selectPastPurchaseRefinement'](field, 2),
         }
       ];
       pastPurchasesPillsCategory.props.navigation = navigation;
       pastPurchasesPillsCategory.actions = <any>{};
-      const deselectAction = pastPurchasesPillsCategory.actions.deselectPastPurchaseRefinement = spy();
-      const selectAction = pastPurchasesPillsCategory.actions.selectPastPurchaseRefinement = spy();
-      const set = pastPurchasesPillsCategory.set = spy((state) => pastPurchasesPillsCategory.state = state);
+      const action = pastPurchasesPillsCategory.actions.resetPastPurchaseQueryAndSelectRefinement = spy();
 
       pastPurchasesPillsCategory.updateState();
 
@@ -96,11 +97,11 @@ suite('PastPurchasesPillsCategory', ({ expect, spy, stub }) => {
       expect(JSON.stringify(pastPurchasesPillsCategory.state.refinements)).to.be
         .eql(JSON.stringify(newRefinements));
       pastPurchasesPillsCategory.state.refinements[0]['onClick']();
-      expect(selectAction).to.be.calledWithExactly(field, 0);
+      expect(onClick).to.be.calledOnce;
       pastPurchasesPillsCategory.state.refinements[1]['onClick']();
-      expect(deselectAction).to.be.calledWithExactly(field, 1);
+      expect(action).to.be.calledWithExactly(field, 1);
       pastPurchasesPillsCategory.state.refinements[2]['onClick']();
-      expect(selectAction).to.be.calledWithExactly(field, 2);
+      expect(action).to.be.calledWithExactly(field, 2);
     });
   });
 
@@ -110,6 +111,6 @@ suite('PastPurchasesPillsCategory', ({ expect, spy, stub }) => {
 
     pastPurchasesPillsCategory.updateState();
 
-    expect(set).to.be.calledWithExactly({ navigation: undefined, refinements: [] });
+    expect(pastPurchasesPillsCategory.state).to.be.eql({ navigation: undefined, refinements: [] });
   });
 });

@@ -25,6 +25,7 @@ suite('PastPurchasesPill', ({ expect, spy, stub }) => {
         expect(tag.state).to.eql({
           refinement: undefined,
           onClick: undefined,
+          onClose: undefined,
           selected: false,
         });
       });
@@ -56,31 +57,31 @@ suite('PastPurchasesPill', ({ expect, spy, stub }) => {
   });
 
   describe('updateState()', () => {
-    const onClick = () => 1;
+    const onClick = { b: 2 };
+    const onClose = { a: 1 };
     const selected = true;
     const refinement: any = {
       a: 1,
       onClick,
+      onClose,
       selected,
     };
 
     it('should set state', () => {
-      const set = pastPurchasesPill.set = spy();
       pastPurchasesPill.props.refinement = refinement;
 
       pastPurchasesPill.updateState();
 
-      expect(set).to.be.calledWithExactly({ refinement, onClick, selected: true });
+      expect(pastPurchasesPill.state).to.be.eql({ refinement, onClick, onClose, selected: true });
     });
 
     it('should set selected to false if selected is falsy', () => {
       refinement.selected = undefined;
-      const set = pastPurchasesPill.set = spy();
       pastPurchasesPill.props.refinement = refinement;
 
       pastPurchasesPill.updateState();
 
-      expect(set).to.be.calledWithExactly({ refinement, onClick, selected: false });
+      expect(pastPurchasesPill.state).to.be.eql({ refinement, onClick, onClose, selected: false });
     });
   });
 });
