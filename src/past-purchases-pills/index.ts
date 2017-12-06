@@ -12,7 +12,7 @@ class PastPurchasesPills {
   };
 
   init() {
-    this.flux.once(Events.PAST_PURCHASE_REFINEMENTS_UPDATED, this.updateState);
+    this.flux.once(Events.PAST_PURCHASE_NAVIGATIONS_UPDATED, this.updateState);
     this.flux.on(Events.PAST_PURCHASE_PRODUCTS_UPDATED, this.updateState);
   }
 
