@@ -59,7 +59,7 @@
     "@team-griffin/install-self-peers": "^1.1.1",
     "@types/node": "^8.0.5",
     "chai": "^4.0.2",
-    "condition-circle": "^1.5.0",
+    "condition-circle": "^2.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "husky": "^0.14.1",
     "re-start": "^1.14.8",
