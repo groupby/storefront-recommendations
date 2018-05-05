@@ -10,7 +10,7 @@ class Recommendations {
   };
 
   init() {
-    this.flux.on(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, this.updateProducts);
+    this.subscribe(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, this.updateProducts);
   }
 
   updateProducts = (products: Store.Product[]) =>

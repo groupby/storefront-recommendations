@@ -44,12 +44,12 @@ suite('Recommendations', ({ expect, spy, stub }) => {
 
   describe('init()', () => {
     it('should listen for RECOMMENDATIONS_PRODUCTS_UPDATED', () => {
-      const on = spy();
-      recommendations.flux = <any>{ on };
+      const subscribe = recommendations.subscribe = spy();
 
       recommendations.init();
 
-      expect(on).to.be.calledWithExactly(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, recommendations.updateProducts);
+      expect(subscribe).to.be
+        .calledWithExactly(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, recommendations.updateProducts);
     });
   });
 
