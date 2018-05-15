@@ -5,7 +5,7 @@ import suite from './_suite';
 
 const STRUCTURE = { w: 'x' };
 
-suite('Recommendations', ({ expect, spy, stub }) => {
+suite('Recommendations', ({ expect, spy, stub, itShouldProvideAlias }) => {
   let select: sinon.SinonStub;
   let recommendations: Recommendations;
 
@@ -20,13 +20,9 @@ suite('Recommendations', ({ expect, spy, stub }) => {
     delete Recommendations.prototype.config;
   });
 
-  describe('constructor()', () => {
-    describe('structure', () => {
-      it('should have initial value', () => {
-        expect(recommendations.structure).to.eq(STRUCTURE);
-      });
-    });
+  itShouldProvideAlias(Recommendations, 'recommendations');
 
+  describe('constructor()', () => {
     describe('state', () => {
       it('should set initial value', () => {
         const products = ['a', 'b', 'c'];
@@ -44,12 +40,14 @@ suite('Recommendations', ({ expect, spy, stub }) => {
 
   describe('init()', () => {
     it('should listen for RECOMMENDATIONS_PRODUCTS_UPDATED', () => {
-      const subscribe = recommendations.subscribe = spy();
+      const subscribe = (recommendations.subscribe = spy());
 
       recommendations.init();
 
-      expect(subscribe).to.be
-        .calledWithExactly(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, recommendations.updateProducts);
+      expect(subscribe).to.be.calledWithExactly(
+        Events.RECOMMENDATIONS_PRODUCTS_UPDATED,
+        recommendations.updateProducts
+      );
     });
   });
 
@@ -57,8 +55,8 @@ suite('Recommendations', ({ expect, spy, stub }) => {
     it('should set products', () => {
       const products: any[] = ['a', 'b', 'c'];
       const remapped = ['d', 'e', 'f'];
-      const set = recommendations.set = spy();
-      const mapProducts = recommendations.mapProducts = spy(() => remapped);
+      const set = (recommendations.set = spy());
+      const mapProducts = (recommendations.mapProducts = spy(() => remapped));
 
       recommendations.updateProducts(products);
 
@@ -71,11 +69,12 @@ suite('Recommendations', ({ expect, spy, stub }) => {
     it('should transform and remap products', () => {
       const transform = spy(() => 'x');
       const transformer = stub(ProductTransformer, 'transformer').returns(transform);
+      recommendations.config = { structure: STRUCTURE } as any;
 
       expect(recommendations.mapProducts(<any[]>['a', 'b', 'c'])).to.eql(['x', 'x', 'x']);
       expect(transformer).to.be.calledWithExactly(STRUCTURE);
-      expect(transform).to.be.calledThrice
-        .and.calledWith('a')
+      expect(transform)
+        .to.be.calledThrice.and.calledWith('a')
         .and.calledWith('b')
         .and.calledWith('c');
     });

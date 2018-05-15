@@ -1,27 +1,24 @@
-import { alias, tag, Events, ProductTransformer, Selectors, Store, Structure, Tag } from '@storefront/core';
+import { provide, tag, Events, ProductTransformer, Selectors, Store, Structure, Tag } from '@storefront/core';
 
-@alias('recommendations')
+@provide('recommendations')
 @tag('gb-recommendations', require('./index.html'))
 class Recommendations {
-
-  structure: Structure = this.config.structure;
   state: Recommendations.State = {
-    products: this.mapProducts(this.select(Selectors.recommendationsProducts))
+    products: this.mapProducts(this.select(Selectors.recommendationsProducts)),
   };
 
   init() {
     this.subscribe(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, this.updateProducts);
   }
 
-  updateProducts = (products: Store.Product[]) =>
-    this.set({ products: this.mapProducts(products) })
+  updateProducts = (products: Store.Product[]) => this.set({ products: this.mapProducts(products) });
 
   mapProducts(products: Store.Product[]) {
-    return products.map(ProductTransformer.transformer(this.structure));
+    return products.map(ProductTransformer.transformer(this.config.structure));
   }
 }
 
-interface Recommendations extends Tag<any, Recommendations.State> { }
+interface Recommendations extends Tag<any, Recommendations.State> {}
 namespace Recommendations {
   export interface State {
     products: any[];
