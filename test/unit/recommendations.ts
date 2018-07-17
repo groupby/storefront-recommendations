@@ -4,6 +4,7 @@ import Recommendations from '../../src/recommendations';
 import suite from './_suite';
 
 const STRUCTURE = { w: 'x' };
+const RECOMMENDATIONS_PRODUCTS = [{ value: '1' }, { value: '2' }, { value: '3' }];
 
 suite('Recommendations', ({ expect, spy, stub, itShouldProvideAlias }) => {
   let select: sinon.SinonStub;
@@ -12,7 +13,7 @@ suite('Recommendations', ({ expect, spy, stub, itShouldProvideAlias }) => {
   beforeEach(() => {
     Recommendations.prototype.config = <any>{ structure: STRUCTURE };
     Recommendations.prototype.flux = <any>{};
-    select = Recommendations.prototype.select = stub().returns([]);
+    select = Recommendations.prototype.select = stub().returns(RECOMMENDATIONS_PRODUCTS);
     recommendations = new Recommendations();
   });
   afterEach(() => {
@@ -39,15 +40,14 @@ suite('Recommendations', ({ expect, spy, stub, itShouldProvideAlias }) => {
   });
 
   describe('init()', () => {
-    it('should listen for RECOMMENDATIONS_PRODUCTS_UPDATED', () => {
+    it('should listen for RECOMMENDATIONS_PRODUCTS_UPDATED and set up initial state', () => {
       const subscribe = (recommendations.subscribe = spy());
+      const updateProducts = (recommendations.updateProducts = spy());
 
       recommendations.init();
 
-      expect(subscribe).to.be.calledWithExactly(
-        Events.RECOMMENDATIONS_PRODUCTS_UPDATED,
-        recommendations.updateProducts
-      );
+      expect(subscribe).to.be.calledWithExactly(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, updateProducts);
+      expect(updateProducts).to.be.calledWithExactly(RECOMMENDATIONS_PRODUCTS);
     });
   });
 

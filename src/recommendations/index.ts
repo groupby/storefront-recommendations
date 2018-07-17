@@ -9,6 +9,8 @@ class Recommendations {
 
   init() {
     this.subscribe(Events.RECOMMENDATIONS_PRODUCTS_UPDATED, this.updateProducts);
+
+    this.updateProducts(this.select(Selectors.recommendationsProducts));
   }
 
   updateProducts = (products: Store.Product[]) => this.set({ products: this.mapProducts(products) });
