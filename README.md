@@ -1,4 +1,10 @@
-# StoreFront recommendations
+# [MOVED] StoreFront recommendations
+
+* * *
+
+**This repository has been moved to <https://github.com/groupby/storefront>.**
+
+* * *
 
 StoreFront `<gb-recommendations>` component
 
